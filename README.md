@@ -13,13 +13,13 @@ Skeleton of the DataBase For ABA tool by P'ti Dom
 - [Paul Vaillant](https://github.com/pavaillant)
 
 
-MAMP permet de faire tourner un serveur MySQL en local, qui hébergera la BD. Il inclut également phpMyAdmin qui permet la gestion de la BD.
-On utilise phpMyAdmin pour générer la BD, la modifier et la préremplir. On peut importer la BD dans phpMyAdmin à l'aide du fichier SQL p'titdom.sql
+MAMP/WAMP ou XAMP permet de faire tourner un serveur MySQL en local, qui hébergera la BD. Il inclut également phpMyAdmin qui permet la gestion de la BD.
+On utilise phpMyAdmin pour générer la BD, la modifier et la préremplir. On peut importer la BD dans phpMyAdmin à l'aide du fichier SQL ababyptitdom_V1.sql
 Le fichier connexion_base permet la connexion entre le site et la BD sur le serveur My SQL.
 
-Voir ababyptitdom.png
-
 Description générale de la maquette avec vue relationnelle
+
+Voir ababyptitdom.png
 
 La base de données a été construite progressivement au fur et à mesure de la compréhension des contraintes en terme de contenu de l'application. La BD a atteint une version qui intègre tous les concepts impliqués dans l'approche ABA et le travail des psychologues et intervenants dont nous avons pris connaissance au cours du stage. La BD pour être agrandie ou ajustée par la suite pour ajouter de nouvelles fonctionnalités.
 
@@ -138,4 +138,5 @@ Table classeurs :
 Table de liaison entre un apprenant et des valeurs, qui permet de référencer l'ensemble des pictogrammes (enregistrés dans la table valeurs), qui constitue le classeur PECS d'un apprenant.
 
 
-Description de la BD//Maquette table par table + requetes SQL complexes
+
+Un autre document contient une description de la BD en paralèlle de la maquette page par page, en indiquant les tables impliquées sur cette page et les requetes SQL complexes permettant d'interagir avec à titre d'exemples.

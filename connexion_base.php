@@ -3,7 +3,7 @@
 $config_base['hote']        = "localhost";
 $config_base['utilisateur'] = "root";
 $config_base['motdepasse']  = "root";   // si Wampserver, mettez "" ici
-$config_base['nom_base']    = "p'titdom";
+$config_base['nom_base']    = "ababyptitdom_v1";
 
 
 // connexion à la base de données

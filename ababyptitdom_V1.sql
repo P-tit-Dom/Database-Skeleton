@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 14, 2022 at 01:29 PM
+-- Generation Time: Jul 01, 2022 at 12:34 PM
 -- Server version: 5.7.24
 -- PHP Version: 8.0.1
 
@@ -18,8 +18,28 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ababyptitdom`
+-- Database: `ababyptitdom_v1`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `apprenants`
+--
+
+CREATE TABLE `apprenants` (
+  `identifiant` varchar(256) NOT NULL,
+  `actif` bit(1) NOT NULL DEFAULT b'1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `apprenants`
+--
+
+INSERT INTO `apprenants` (`identifiant`, `actif`) VALUES
+('enfant1', b'1'),
+('enfant2', b'1'),
+('enfant3', b'0');
 
 -- --------------------------------------------------------
 
@@ -48,10 +68,10 @@ INSERT INTO `cibles_defaut` (`id`, `nom`, `id_modele`, `nom_format`, `critere_re
 (35, 'Atteindre', 3, 'IC/IP/+', '5x20', '3x80', 4),
 (36, 'Relâcher', 3, 'IC/IP/+', '5x20', '3x80', 5),
 (37, 'Main ouverte', 3, 'OUI/NON', '5x20', '3x80', 6),
-(38, 'Sélectionner 1 item', 4, '+/G', '5x20', '3x80', 1),
-(39, 'Sélectionner 2 items', 4, '+/G', '5x20', '3x80', 2),
-(40, 'Sélectionner 3 items', 4, '+/G', '5x20', '3x80', 3),
-(41, 'Sélectionner 4 items', 4, '+/G', '5x20', '3x80', 4);
+(38, 'Sélectionner 1 item', 1, '+/G', '5x20', '3x80', 1),
+(39, 'Sélectionner 2 items', 1, '+/G', '5x20', '3x80', 2),
+(40, 'Sélectionner 3 items', 1, '+/G', '5x20', '3x80', 3),
+(41, 'Sélectionner 4 items', 1, '+/G', '5x20', '3x80', 4);
 
 -- --------------------------------------------------------
 
@@ -68,23 +88,24 @@ CREATE TABLE `cibles_individuelles` (
   `ordre` int(11) DEFAULT NULL,
   `maintien` bit(1) NOT NULL DEFAULT b'0',
   `critere_acquisition` varchar(255) NOT NULL DEFAULT '3x80',
-  `critere_revision` varchar(255) NOT NULL DEFAULT '5x20'
+  `critere_revision` varchar(255) NOT NULL DEFAULT '5x20',
+  `remarque` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `cibles_individuelles`
 --
 
-INSERT INTO `cibles_individuelles` (`id`, `id_objectif_pei`, `nom`, `nom_format`, `probe`, `ordre`, `maintien`, `critere_acquisition`, `critere_revision`) VALUES
-(1, 1, 'Activité', 'Activités', b'0', 1, b'0', '3x80', '5x20'),
-(3, 1, 'Image', 'Images', b'0', 2, b'0', '3x80', '5x20'),
-(4, 1, 'Saisir', 'IC/IP/+', b'0', 3, b'0', '3x80', '5x20'),
-(5, 1, 'Atteindre', 'IC/IP/+', b'0', 4, b'0', '3x80', '5x20'),
-(6, 1, 'Relâcher', 'IC/IP/+', b'0', 5, b'0', '3x80', '5x20'),
-(7, 1, 'Main ouverte', 'OUI/NON', b'0', 6, b'0', '3x80', '5x20'),
-(8, 4, 'Sélectionner 2 items', '+/G', b'0', 1, b'0', '3x80', '5x20'),
-(9, 4, 'Sélectionner 3 items', '+/G', b'0', 2, b'0', '3x80', '5x20'),
-(10, 4, 'Sélectionner 4 items', '+/G', b'0', 3, b'0', '3x80', '5x20');
+INSERT INTO `cibles_individuelles` (`id`, `id_objectif_pei`, `nom`, `nom_format`, `probe`, `ordre`, `maintien`, `critere_acquisition`, `critere_revision`, `remarque`) VALUES
+(1, 1, 'Activité', 'Activités', b'0', 1, b'0', '3x80', '5x20', 'ITT'),
+(3, 1, 'Image', 'Images', b'0', 2, b'0', '3x80', '5x20', 'ITT'),
+(4, 1, 'Saisir', 'IC/IP/+', b'0', 3, b'0', '3x80', '5x20', 'ITT'),
+(5, 1, 'Atteindre', 'IC/IP/+', b'0', 4, b'0', '3x80', '5x20', 'ITT'),
+(6, 1, 'Relâcher', 'IC/IP/+', b'0', 5, b'0', '3x80', '5x20', 'ITT'),
+(7, 1, 'Main ouverte', 'OUI/NON', b'0', 6, b'0', '3x80', '5x20', 'ITT'),
+(8, 4, 'Sélectionner 2 items', '+/G', b'0', 1, b'0', '3x80', '5x20', 'ITT'),
+(9, 4, 'Sélectionner 3 items', '+/G', b'0', 2, b'0', '3x80', '5x20', 'ITT'),
+(10, 4, 'Sélectionner 4 items', '+/G', b'0', 3, b'0', '3x80', '5x20', 'ITT');
 
 -- --------------------------------------------------------
 
@@ -126,7 +147,7 @@ INSERT INTO `cibles_seances` (`id`, `id_seance`, `id_cible_individuelle`) VALUES
 
 CREATE TABLE `classeurs` (
   `id` int(11) NOT NULL,
-  `identifiant_enfant` varchar(256) NOT NULL,
+  `identifiant_apprenant` varchar(256) NOT NULL,
   `nom_valeur` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -134,7 +155,7 @@ CREATE TABLE `classeurs` (
 -- Dumping data for table `classeurs`
 --
 
-INSERT INTO `classeurs` (`id`, `identifiant_enfant`, `nom_valeur`) VALUES
+INSERT INTO `classeurs` (`id`, `identifiant_apprenant`, `nom_valeur`) VALUES
 (1, 'enfant1', 'picto bulle'),
 (2, 'enfant1', 'picto je veux'),
 (3, 'enfant2', 'picto je veux'),
@@ -209,20 +230,20 @@ INSERT INTO `comportements` (`nom`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `comportements_enfants`
+-- Table structure for table `comportements_apprenants`
 --
 
-CREATE TABLE `comportements_enfants` (
+CREATE TABLE `comportements_apprenants` (
   `id` int(11) NOT NULL,
-  `identifiant_enfant` varchar(256) NOT NULL,
+  `identifiant_apprenant` varchar(256) NOT NULL,
   `nom_comportement` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `comportements_enfants`
+-- Dumping data for table `comportements_apprenants`
 --
 
-INSERT INTO `comportements_enfants` (`id`, `identifiant_enfant`, `nom_comportement`) VALUES
+INSERT INTO `comportements_apprenants` (`id`, `identifiant_apprenant`, `nom_comportement`) VALUES
 (1, 'enfant1', 'Cri'),
 (2, 'enfant1', 'Pleurs'),
 (3, 'enfant2', 'Crachat'),
@@ -293,26 +314,6 @@ INSERT INTO `domaines` (`nom`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `enfants`
---
-
-CREATE TABLE `enfants` (
-  `identifiant` varchar(256) NOT NULL,
-  `actif` bit(1) NOT NULL DEFAULT b'1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `enfants`
---
-
-INSERT INTO `enfants` (`identifiant`, `actif`) VALUES
-('enfant1', b'1'),
-('enfant2', b'1'),
-('enfant3', b'0');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `formats`
 --
 
@@ -345,19 +346,20 @@ CREATE TABLE `log_cibles` (
   `id` int(11) NOT NULL,
   `id_cible_seance` int(11) NOT NULL,
   `nom_valeur` varchar(256) NOT NULL,
-  `occurrence` int(11) NOT NULL
+  `occurrence` int(11) NOT NULL,
+  `remarque` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `log_cibles`
 --
 
-INSERT INTO `log_cibles` (`id`, `id_cible_seance`, `nom_valeur`, `occurrence`) VALUES
-(1, 7, '+', 1),
-(2, 7, 'G', 2),
-(3, 7, '+', 3),
-(4, 7, '+', 4),
-(5, 7, 'G', 5);
+INSERT INTO `log_cibles` (`id`, `id_cible_seance`, `nom_valeur`, `occurrence`, `remarque`) VALUES
+(1, 7, '+', 1, 'ITT'),
+(2, 7, 'G', 2, 'ITT'),
+(3, 7, '+', 3, 'ITT'),
+(4, 7, '+', 4, 'ITT'),
+(5, 7, 'G', 5, 'ITT');
 
 -- --------------------------------------------------------
 
@@ -388,6 +390,7 @@ INSERT INTO `log_comportements` (`id`, `id_comportement_seance`, `duree`, `heure
 
 CREATE TABLE `modeles` (
   `id` int(11) NOT NULL,
+  `nom` varchar(255) NOT NULL,
   `nom_objectif` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -395,10 +398,10 @@ CREATE TABLE `modeles` (
 -- Dumping data for table `modeles`
 --
 
-INSERT INTO `modeles` (`id`, `nom_objectif`) VALUES
-(3, 'Phase 1'),
-(2, 'Se brosser les dents'),
-(4, 'Sélectionner 4 items');
+INSERT INTO `modeles` (`id`, `nom`, `nom_objectif`) VALUES
+(1, 'Modele standard', 'Sélectionner 4 items'),
+(2, 'Modele standard', 'Se brosser les dents'),
+(3, 'Phase 1', 'Phase 1');
 
 -- --------------------------------------------------------
 
@@ -454,8 +457,10 @@ CREATE TABLE `objectifs_peis` (
   `id` int(11) NOT NULL,
   `id_pei` int(11) NOT NULL,
   `nom_objectif` varchar(256) NOT NULL,
-  `observation` text,
-  `remarque` varchar(256) NOT NULL,
+  `strategie` text,
+  `constat` text,
+  `remarque` varchar(256) DEFAULT NULL,
+  `avenant` tinyint(1) NOT NULL DEFAULT '0',
   `valide` bit(1) NOT NULL DEFAULT b'0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -463,18 +468,19 @@ CREATE TABLE `objectifs_peis` (
 -- Dumping data for table `objectifs_peis`
 --
 
-INSERT INTO `objectifs_peis` (`id`, `id_pei`, `nom_objectif`, `observation`, `remarque`, `valide`) VALUES
-(1, 5, 'Phase 1', 'L\'enfant progresse vite mais a des difficultés dans un environnement bruyant', 'ITT', b'0'),
-(2, 5, 'Reconnaître 8 mots ou symboles', NULL, 'ITT', b'0'),
-(3, 5, 'Se brosser les dents', NULL, 'NET', b'0'),
-(4, 5, 'Sélectionner 4 items', NULL, 'ITT', b'1'),
-(5, 6, 'Phase 1', NULL, 'ITT', b'1'),
-(6, 6, 'Reconnaître 8 mots ou symboles', NULL, 'ITT', b'1'),
-(7, 7, 'Phase 1', NULL, 'ITT', b'0'),
-(8, 7, 'Reconnaître 8 mots ou symboles', NULL, 'ITT', b'0'),
-(9, 7, 'Se brosser les dents', NULL, 'NET', b'0'),
-(10, 8, 'Se brosser les dents', NULL, 'NET', b'1'),
-(11, 8, 'Sélectionner 4 items', NULL, 'ITT', b'1');
+INSERT INTO `objectifs_peis` (`id`, `id_pei`, `nom_objectif`, `strategie`, `constat`, `remarque`, `avenant`, `valide`) VALUES
+(1, 5, 'Phase 1', 'Cf. classeur. Utiliser guidance si nécessaire', 'Tend la main ouverte pour faire des demandes', 'ITT', 0, b'0'),
+(2, 5, 'Reconnaître 8 mots ou symboles', NULL, '', 'ITT', 0, b'0'),
+(3, 5, 'Se brosser les dents', NULL, '', 'NET', 0, b'0'),
+(4, 5, 'Sélectionner 4 items', NULL, '', 'ITT', 0, b'1'),
+(5, 6, 'Phase 1', NULL, '', 'ITT', 0, b'1'),
+(6, 6, 'Reconnaître 8 mots ou symboles', NULL, '', 'ITT', 0, b'1'),
+(7, 7, 'Phase 1', NULL, '', 'ITT', 0, b'0'),
+(8, 7, 'Reconnaître 8 mots ou symboles', NULL, '', 'ITT', 0, b'0'),
+(9, 7, 'Se brosser les dents', NULL, '', 'NET', 0, b'0'),
+(10, 8, 'Se brosser les dents', NULL, '', 'NET', 0, b'1'),
+(11, 8, 'Sélectionner 4 items', NULL, '', 'ITT', 0, b'1'),
+(14, 5, 'Phase 1', NULL, NULL, NULL, 1, b'0');
 
 -- --------------------------------------------------------
 
@@ -484,8 +490,9 @@ INSERT INTO `objectifs_peis` (`id`, `id_pei`, `nom_objectif`, `observation`, `re
 
 CREATE TABLE `peis` (
   `id` int(11) NOT NULL,
-  `identifiant_enfant` varchar(256) NOT NULL,
+  `identifiant_apprenant` varchar(256) NOT NULL,
   `creation` date NOT NULL,
+  `validation` date DEFAULT NULL,
   `cloture` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -493,11 +500,11 @@ CREATE TABLE `peis` (
 -- Dumping data for table `peis`
 --
 
-INSERT INTO `peis` (`id`, `identifiant_enfant`, `creation`, `cloture`) VALUES
-(5, 'enfant1', '2022-06-14', NULL),
-(6, 'enfant1', '2021-06-14', '2022-06-14'),
-(7, 'enfant2', '2022-04-05', NULL),
-(8, 'enfant3', '2021-06-01', '2022-06-01');
+INSERT INTO `peis` (`id`, `identifiant_apprenant`, `creation`, `validation`, `cloture`) VALUES
+(5, 'enfant1', '2022-06-14', '2022-06-16', NULL),
+(6, 'enfant1', '2021-06-14', '2021-06-15', '2022-06-14'),
+(7, 'enfant2', '2022-04-05', NULL, NULL),
+(8, 'enfant3', '2021-06-01', '2021-06-15', '2022-06-01');
 
 -- --------------------------------------------------------
 
@@ -510,6 +517,13 @@ CREATE TABLE `prerequis` (
   `id_objectif_pei` int(11) NOT NULL,
   `id_objectif_pei_requis` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `prerequis`
+--
+
+INSERT INTO `prerequis` (`id`, `id_objectif_pei`, `id_objectif_pei_requis`) VALUES
+(1, 2, 4);
 
 -- --------------------------------------------------------
 
@@ -556,19 +570,21 @@ INSERT INTO `roles` (`nom`) VALUES
 
 CREATE TABLE `seances` (
   `id` int(11) NOT NULL,
+  `identifiant_apprenant` varchar(255) NOT NULL,
   `identifiant_intervenant` varchar(256) NOT NULL,
   `date` date NOT NULL,
   `matin_aprem` tinyint(1) NOT NULL,
-  `retour_intervenant` text
+  `retour_intervenant` text,
+  `observation` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `seances`
 --
 
-INSERT INTO `seances` (`id`, `identifiant_intervenant`, `date`, `matin_aprem`, `retour_intervenant`) VALUES
-(1, 'idjustine', '2022-06-14', 0, 'A vite progressé'),
-(2, 'idvalentine', '2022-06-15', 1, 'Beaucoup de comportements');
+INSERT INTO `seances` (`id`, `identifiant_apprenant`, `identifiant_intervenant`, `date`, `matin_aprem`, `retour_intervenant`, `observation`) VALUES
+(1, 'enfant1', 'idjustine', '2022-06-14', 0, 'A vite progressé', ''),
+(2, 'enfant1', 'idvalentine', '2022-06-15', 1, 'Beaucoup de comportements', '');
 
 -- --------------------------------------------------------
 
@@ -670,6 +686,12 @@ CREATE TABLE `validations` (
 --
 
 --
+-- Indexes for table `apprenants`
+--
+ALTER TABLE `apprenants`
+  ADD PRIMARY KEY (`identifiant`);
+
+--
 -- Indexes for table `cibles_defaut`
 --
 ALTER TABLE `cibles_defaut`
@@ -687,7 +709,8 @@ ALTER TABLE `cibles_individuelles`
   ADD KEY `FK_cibles_indiv_peis_objectifs` (`id_objectif_pei`) USING BTREE,
   ADD KEY `FK_cibles_indiv_criteres_acquisition` (`critere_acquisition`) USING BTREE,
   ADD KEY `FK_cibles_indiv_criteres_revision` (`critere_revision`) USING BTREE,
-  ADD KEY `FK_cibles_indiv_formats` (`nom_format`);
+  ADD KEY `FK_cibles_indiv_formats` (`nom_format`),
+  ADD KEY `FK_cibles_indiv_remarques` (`remarque`);
 
 --
 -- Indexes for table `cibles_seances`
@@ -702,8 +725,8 @@ ALTER TABLE `cibles_seances`
 --
 ALTER TABLE `classeurs`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `FK_classeurs_enfants` (`identifiant_enfant`) USING BTREE,
-  ADD KEY `FK_classeurs_valeurs` (`nom_valeur`) USING BTREE;
+  ADD KEY `FK_classeurs_valeurs` (`nom_valeur`) USING BTREE,
+  ADD KEY `FK_classeurs_apprenants` (`identifiant_apprenant`) USING BTREE;
 
 --
 -- Indexes for table `competences`
@@ -726,12 +749,12 @@ ALTER TABLE `comportements`
   ADD PRIMARY KEY (`nom`);
 
 --
--- Indexes for table `comportements_enfants`
+-- Indexes for table `comportements_apprenants`
 --
-ALTER TABLE `comportements_enfants`
+ALTER TABLE `comportements_apprenants`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `FK_comport_enf_enfants` (`identifiant_enfant`) USING BTREE,
-  ADD KEY `FK_comport_enf_comportements` (`nom_comportement`) USING BTREE;
+  ADD KEY `FK_comport_appr_apprenants` (`identifiant_apprenant`) USING BTREE,
+  ADD KEY `FK_comport_appr_comportements` (`nom_comportement`) USING BTREE;
 
 --
 -- Indexes for table `comportements_seances`
@@ -754,12 +777,6 @@ ALTER TABLE `domaines`
   ADD PRIMARY KEY (`nom`);
 
 --
--- Indexes for table `enfants`
---
-ALTER TABLE `enfants`
-  ADD PRIMARY KEY (`identifiant`);
-
---
 -- Indexes for table `formats`
 --
 ALTER TABLE `formats`
@@ -771,7 +788,8 @@ ALTER TABLE `formats`
 ALTER TABLE `log_cibles`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FK_log_cibles_valeurs` (`nom_valeur`) USING BTREE,
-  ADD KEY `FK_log_cibles_cibles_seances` (`id_cible_seance`) USING BTREE;
+  ADD KEY `FK_log_cibles_cibles_seances` (`id_cible_seance`) USING BTREE,
+  ADD KEY `FK_log_cibles_remarques` (`remarque`);
 
 --
 -- Indexes for table `log_comportements`
@@ -815,7 +833,7 @@ ALTER TABLE `objectifs_peis`
 --
 ALTER TABLE `peis`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `FK_peis_enfants` (`identifiant_enfant`) USING BTREE;
+  ADD KEY `FK_peis_apprenants` (`identifiant_apprenant`) USING BTREE;
 
 --
 -- Indexes for table `prerequis`
@@ -842,7 +860,8 @@ ALTER TABLE `roles`
 --
 ALTER TABLE `seances`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `FK_seances_intervenants` (`identifiant_intervenant`) USING BTREE;
+  ADD KEY `FK_seances_intervenants` (`identifiant_intervenant`) USING BTREE,
+  ADD KEY `FK_seances_apprenants` (`identifiant_apprenant`);
 
 --
 -- Indexes for table `utilisateurs`
@@ -907,9 +926,9 @@ ALTER TABLE `competences_domaines`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `comportements_enfants`
+-- AUTO_INCREMENT for table `comportements_apprenants`
 --
-ALTER TABLE `comportements_enfants`
+ALTER TABLE `comportements_apprenants`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
@@ -934,7 +953,7 @@ ALTER TABLE `log_comportements`
 -- AUTO_INCREMENT for table `modeles`
 --
 ALTER TABLE `modeles`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `objectifs_competences`
@@ -946,7 +965,7 @@ ALTER TABLE `objectifs_competences`
 -- AUTO_INCREMENT for table `objectifs_peis`
 --
 ALTER TABLE `objectifs_peis`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `peis`
@@ -958,7 +977,7 @@ ALTER TABLE `peis`
 -- AUTO_INCREMENT for table `prerequis`
 --
 ALTER TABLE `prerequis`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `seances`
@@ -989,7 +1008,7 @@ ALTER TABLE `cibles_defaut`
   ADD CONSTRAINT `FK_cibles_defaut_criteres_acquisition` FOREIGN KEY (`critere_acquisition`) REFERENCES `criteres` (`nom`),
   ADD CONSTRAINT `FK_cibles_defaut_criteres_revision` FOREIGN KEY (`critere_revision`) REFERENCES `criteres` (`nom`),
   ADD CONSTRAINT `FK_cibles_defaut_formats` FOREIGN KEY (`nom_format`) REFERENCES `formats` (`nom`),
-  ADD CONSTRAINT `FK_cibles_defaut_modeles` FOREIGN KEY (`id_modele`) REFERENCES `modeles` (`id`);
+  ADD CONSTRAINT `FK_cibles_defaut_modeles` FOREIGN KEY (`id_modele`) REFERENCES `modeles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `cibles_individuelles`
@@ -998,7 +1017,8 @@ ALTER TABLE `cibles_individuelles`
   ADD CONSTRAINT `FK_cibles_indiv_criteres_acquisition` FOREIGN KEY (`critere_acquisition`) REFERENCES `criteres` (`nom`),
   ADD CONSTRAINT `FK_cibles_indiv_criteres_revision` FOREIGN KEY (`critere_revision`) REFERENCES `criteres` (`nom`),
   ADD CONSTRAINT `FK_cibles_indiv_formats` FOREIGN KEY (`nom_format`) REFERENCES `formats` (`nom`),
-  ADD CONSTRAINT `FK_cibles_indiv_peis_objectifs` FOREIGN KEY (`id_objectif_pei`) REFERENCES `objectifs_peis` (`id`);
+  ADD CONSTRAINT `FK_cibles_indiv_peis_objectifs` FOREIGN KEY (`id_objectif_pei`) REFERENCES `objectifs_peis` (`id`),
+  ADD CONSTRAINT `FK_cibles_indiv_remarques` FOREIGN KEY (`remarque`) REFERENCES `remarques` (`nom`);
 
 --
 -- Constraints for table `cibles_seances`
@@ -1011,7 +1031,7 @@ ALTER TABLE `cibles_seances`
 -- Constraints for table `classeurs`
 --
 ALTER TABLE `classeurs`
-  ADD CONSTRAINT `FK_classeurs_enfants` FOREIGN KEY (`identifiant_enfant`) REFERENCES `enfants` (`identifiant`),
+  ADD CONSTRAINT `FK_classeurs_apprenants` FOREIGN KEY (`identifiant_apprenant`) REFERENCES `apprenants` (`identifiant`),
   ADD CONSTRAINT `FK_classeurs_valeurs` FOREIGN KEY (`nom_valeur`) REFERENCES `valeurs` (`nom`);
 
 --
@@ -1022,17 +1042,17 @@ ALTER TABLE `competences_domaines`
   ADD CONSTRAINT `FK_comp_dom_domaines` FOREIGN KEY (`nom_domaine`) REFERENCES `domaines` (`nom`);
 
 --
--- Constraints for table `comportements_enfants`
+-- Constraints for table `comportements_apprenants`
 --
-ALTER TABLE `comportements_enfants`
-  ADD CONSTRAINT `FK_comport_enf_comportements` FOREIGN KEY (`nom_comportement`) REFERENCES `comportements` (`nom`),
-  ADD CONSTRAINT `FK_comport_enf_enfants` FOREIGN KEY (`identifiant_enfant`) REFERENCES `enfants` (`identifiant`);
+ALTER TABLE `comportements_apprenants`
+  ADD CONSTRAINT `FK_comport_appr_apprenants` FOREIGN KEY (`identifiant_apprenant`) REFERENCES `apprenants` (`identifiant`),
+  ADD CONSTRAINT `FK_comport_appr_comportements` FOREIGN KEY (`nom_comportement`) REFERENCES `comportements` (`nom`);
 
 --
 -- Constraints for table `comportements_seances`
 --
 ALTER TABLE `comportements_seances`
-  ADD CONSTRAINT `FK_comport_seances_comport_enfants` FOREIGN KEY (`id_comportement_enfant`) REFERENCES `comportements_enfants` (`id`),
+  ADD CONSTRAINT `FK_comport_seances_comport_enfants` FOREIGN KEY (`id_comportement_enfant`) REFERENCES `comportements_apprenants` (`id`),
   ADD CONSTRAINT `FK_comport_seances_seances` FOREIGN KEY (`id_seance`) REFERENCES `seances` (`id`);
 
 --
@@ -1040,6 +1060,7 @@ ALTER TABLE `comportements_seances`
 --
 ALTER TABLE `log_cibles`
   ADD CONSTRAINT `FK_log_cibles_cibles_seances` FOREIGN KEY (`id_cible_seance`) REFERENCES `cibles_seances` (`id`),
+  ADD CONSTRAINT `FK_log_cibles_remarques` FOREIGN KEY (`remarque`) REFERENCES `remarques` (`nom`),
   ADD CONSTRAINT `FK_log_cibles_valeurs` FOREIGN KEY (`nom_valeur`) REFERENCES `valeurs` (`nom`);
 
 --
@@ -1073,7 +1094,7 @@ ALTER TABLE `objectifs_peis`
 -- Constraints for table `peis`
 --
 ALTER TABLE `peis`
-  ADD CONSTRAINT `FK_peis_enfants` FOREIGN KEY (`identifiant_enfant`) REFERENCES `enfants` (`identifiant`);
+  ADD CONSTRAINT `FK_peis_apprenants` FOREIGN KEY (`identifiant_apprenant`) REFERENCES `apprenants` (`identifiant`);
 
 --
 -- Constraints for table `prerequis`
@@ -1086,6 +1107,7 @@ ALTER TABLE `prerequis`
 -- Constraints for table `seances`
 --
 ALTER TABLE `seances`
+  ADD CONSTRAINT `FK_seances_apprenants` FOREIGN KEY (`identifiant_apprenant`) REFERENCES `apprenants` (`identifiant`),
   ADD CONSTRAINT `FK_seances_intervenants` FOREIGN KEY (`identifiant_intervenant`) REFERENCES `utilisateurs` (`identifiant`);
 
 --
